@@ -13,7 +13,7 @@ struct Link
     Link* add_ordered(Link*);
     Link* find(const string& v);
     const Link* find(const string& v) const;
-    Link* next();
+    Link* next() const {return succ;}
     
     string value;
     Link* succ;
@@ -27,7 +27,17 @@ Link* Link::add(Link* nl)
     return nl;
 }
 
-void print_all(Link* p)
+Link* Link::find(const string& v)
+{
+    Link* p=this;
+    while(p){
+        if(p->value==v) return p;
+        p=p->next();
+    }
+    return 0;
+}
+
+void print_all(const Link* p)
 {
     while(p){
         cout << p->value << " ";
@@ -35,15 +45,19 @@ void print_all(Link* p)
     }
 }
 
-
-
 int main()
 {
     
-    Link* w= new Link("What");
+    Link* begin= new Link("What");
     Link* next=begin->add(new Link("is"));
+    next=next->add(new Link("your"));
+    next=next->add(new Link("name________"));
     
-    print_all(begin);    
+    Link* f=begin->find("is");
+    if(f) cout << f->value << endl;
+    
+    
+    print_all(begin);
     
   std::string name;
   std::cout << "What is your name? ";
