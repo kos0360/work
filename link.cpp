@@ -19,6 +19,13 @@ struct Link
     Link* succ;
 };
 
+Link* Link::add(Link* nl)
+{
+    if(nl==0) return this;
+    if(succ!=0) nl->succ=succ;
+    succ=nl;
+    return nl;
+}
 
 
 int main()
