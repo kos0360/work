@@ -37,6 +37,24 @@ Link* Link::find(const string& v)
     return 0;
 }
 
+Link* Link::add_ordered(Link* nl) // Всегда возвращает указатель на начало списка
+{
+    if(value>nl->value){ // если новый мень начального
+        nl->succ=this;
+        return nl;
+    }
+    Link* p=this;    
+    while(p){
+        if(p->next()==0 || p->next()->value>=nl->value){
+            p->add(nl);
+            return this;
+        }
+        p=p->next();
+    }
+    return this; // не вставили
+}
+
+
 void print_all(const Link* p)
 {
     while(p){
@@ -47,12 +65,22 @@ void print_all(const Link* p)
 
 int main()
 {
-    
+    /*
     Link* begin= new Link("What");
     Link* next=begin->add(new Link("is"));
     next=next->add(new Link("your"));
     next=next->add(new Link("name________"));
-    
+    */
+
+	Link* begin= new Link("b");
+    begin=begin->add_ordered(new Link("a"));
+    begin=begin->add_ordered(new Link("d"));
+    begin=begin->add_ordered(new Link("c"));
+    begin=begin->add_ordered(new Link("f"));
+    begin=begin->add_ordered(new Link("a"));
+    begin=begin->add_ordered(new Link("e"));
+
+
     Link* f=begin->find("is");
     if(f) cout << f->value << endl;
     
