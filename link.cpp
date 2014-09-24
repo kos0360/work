@@ -7,7 +7,7 @@ using namespace std;
 struct Link
 {
     Link(const string& v)
-    : value(v), succ(0), first(this){}
+    : value(v), succ(0){}
 
     Link* add(Link*);
     Link* add_ordered(Link*);
@@ -24,7 +24,7 @@ struct Link
 int main()
 {
     
-    Link* w new Link("What");
+    Link* w= new Link("What");
     
     
   std::string name;
