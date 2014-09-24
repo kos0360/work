@@ -13,6 +13,7 @@ struct Link
     Link* add_ordered(Link*);
     Link* find(const string& v);
     const Link* find(const string& v) const;
+	Link* erase(Link*);
     Link* next() const {return succ;}
     
     string value;
@@ -54,6 +55,22 @@ Link* Link::add_ordered(Link* nl) // ¬сегда возвращает указатель на начало списк
     return this; // не вставили
 }
 
+Link* Link::erase(Link* ep) // вызываетс€ из первого элемента, возвращает указатель на первый элемент
+{
+    Link* p=this;
+    Link* prev=0;
+    while(p){
+        if(ep==p && prev==0) // удал€емый €вл€етс€ первым узлом
+            return succ;
+        if(ep==p && prev!=0){ // удал€емый не €вл€етс€ первым узлом
+            prev->succ=p->succ;
+            return this;
+        }
+        prev=p;
+        p=p->next();
+    }
+    return this;
+}
 
 void print_all(const Link* p)
 {
@@ -82,7 +99,10 @@ int main()
 
 
     Link* f=begin->find("is");
-    if(f) cout << f->value << endl;
+    if(f){
+        cout << f->value << endl;
+        begin=begin->erase(f);
+    }
     
     
     print_all(begin);
