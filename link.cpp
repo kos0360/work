@@ -27,12 +27,23 @@ Link* Link::add(Link* nl)
     return nl;
 }
 
+void print_all(Link* p)
+{
+    while(p){
+        cout << p->value << " ";
+        p=p->next();
+    }
+}
+
+
 
 int main()
 {
     
     Link* w= new Link("What");
+    Link* next=begin->add(new Link("is"));
     
+    print_all(begin);    
     
   std::string name;
   std::cout << "What is your name? ";
