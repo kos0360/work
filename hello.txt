@@ -34,7 +34,38 @@ struct Field{
 
         store[rows*collumn-1].b=1; // end point
     }
-    
+    bool check(int r, int c, int p){
+        bool f=0;
+        if(r!=0){
+            // check up
+            if(store[(r-1)*collumn + c].n==0 && store[(r-1)*collumn + c].b!=0){
+                store[(r-1)*collumn + c].n=++p;
+                f=1;
+            }
+        }
+        if(r!=rows-1){
+            // check down
+            if(store[(r+1)*collumn + c].n==0 && store[(r+1)*collumn + c].b!=0){
+                store[(r+1)*collumn + c].n=++p;
+                f=1;
+            }
+        }
+        if(c!=0){
+            // check left
+            if(store[(r)*collumn + c-1].n==0 && store[(r)*collumn + c-1].b!=0){
+                store[(r)*collumn + c-1].n=++p;
+                f=1;
+            }
+        }
+        if(c!=collumn-1){
+            // check right
+            if(store[(r)*collumn + c+1].n==0 && store[(r)*collumn + c+1].b!=0){
+                store[(r)*collumn + c+1].n=++p;
+                f=1;
+            }
+        }
+        return f;
+    }
     void trace(){
         int p=1;
         bool run=1;
@@ -45,8 +76,12 @@ struct Field{
                     if(store[i*collumn + j].n==p){
                         if(i*collumn + j == rows*collumn-1) // finish location
                             run=0;
+                        if(!check(i, j, p))
+                            run=0;
+                        else
+                            ++p;
                     }
-                
+                    
                 }
         }
     }
@@ -58,8 +93,12 @@ std::ostream& operator<<(std::ostream& os, const Field& f)
             
             for(int j=0; j<f.collumn; ++j){
                 //os << "i" << i << "j" << j ;
-                if(f.store[i*f.collumn + j].b)
-                    os <<  " ";
+                if(f.store[i*f.collumn + j].b){
+                    if(f.store[i*f.collumn + j].n)
+                        os << f.store[i*f.collumn + j].n;
+                    else
+                        os <<  " ";
+                }
                 else
                     os << f.store[i*f.collumn + j].b;    
             }
@@ -73,7 +112,8 @@ int main()
 {
     Field f(10, 50);
     f.generate();
-
+    f.trace();
+    
 std::cout << f;
 
   std::string name;
