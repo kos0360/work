@@ -28,7 +28,8 @@ struct Field{
         for(int i=0; i<rows; ++i){
             
             for(int j=0; j<collumn; ++j){
-                store[i*rows + j].n=rand()%10;
+
+                store[i*rows + j].b=rand()%2;
                 
             }
         }
@@ -40,7 +41,10 @@ std::ostream& operator<<(std::ostream& os, const Field& f)
     for(int i=0; i<f.rows; ++i){
             
             for(int j=0; j<f.collumn; ++j){
-                os << f.store[i*f.rows + j].n;    
+                if(f.store[i*f.rows + j].b)
+                    os << " ";
+                else
+                    os << f.store[i*f.rows + j].b;    
             }
             os << std::endl;
     }
