@@ -25,13 +25,27 @@ struct Field{
     std::vector<Brick> store;
     
     void generate(){
-        for(int i=0; i<rows; ++i){
-            
-            for(int j=0; j<collumn; ++j){
-
-                store[i*rows + j].b=rand()%2;
+        for(int i=0; i<rows; ++i)
+             for(int j=0; j<collumn; ++j)
+                store[i*collumn + j].b=rand()%2;
                 
-            }
+        store[0].n=1; // start point
+        store[0].b=1;
+
+        store[rows*collumn-1].b=1; // end point
+    }
+    
+    void trace(){
+        int p=1;
+        while(1){
+            for(int i=0; i<rows; ++i)
+                for(int j=0; j<collumn; ++j){
+
+                    if(store[i*collumn + j].n==p){
+                        
+                    }
+                
+                }
         }
     }
 };
@@ -41,10 +55,11 @@ std::ostream& operator<<(std::ostream& os, const Field& f)
     for(int i=0; i<f.rows; ++i){
             
             for(int j=0; j<f.collumn; ++j){
-                if(f.store[i*f.rows + j].b)
-                    os << " ";
+                //os << "i" << i << "j" << j ;
+                if(f.store[i*f.collumn + j].b)
+                    os <<  " ";
                 else
-                    os << f.store[i*f.rows + j].b;    
+                    os << f.store[i*f.collumn + j].b;    
             }
             os << std::endl;
     }
