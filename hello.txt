@@ -35,32 +35,33 @@ struct Field{
         store[rows*collumn-1].b=1; // end point
     }
     bool check(int r, int c, int p){
+        std::cout << "p=" << p << std::endl; 
         bool f=0;
         if(r!=0){
             // check up
             if(store[(r-1)*collumn + c].n==0 && store[(r-1)*collumn + c].b!=0){
-                store[(r-1)*collumn + c].n=++p;
+                store[(r-1)*collumn + c].n=p+1;
                 f=1;
             }
         }
         if(r!=rows-1){
             // check down
             if(store[(r+1)*collumn + c].n==0 && store[(r+1)*collumn + c].b!=0){
-                store[(r+1)*collumn + c].n=++p;
+                store[(r+1)*collumn + c].n=p+1;
                 f=1;
             }
         }
         if(c!=0){
             // check left
             if(store[(r)*collumn + c-1].n==0 && store[(r)*collumn + c-1].b!=0){
-                store[(r)*collumn + c-1].n=++p;
+                store[(r)*collumn + c-1].n=p+1;
                 f=1;
             }
         }
         if(c!=collumn-1){
             // check right
             if(store[(r)*collumn + c+1].n==0 && store[(r)*collumn + c+1].b!=0){
-                store[(r)*collumn + c+1].n=++p;
+                store[(r)*collumn + c+1].n=p+1;
                 f=1;
             }
         }
@@ -70,19 +71,26 @@ struct Field{
         int p=1;
         bool run=1;
         while(run){
+            int n=0;
             for(int i=0; i<rows; ++i)
                 for(int j=0; j<collumn; ++j){
 
                     if(store[i*collumn + j].n==p){
+                        
+                        
+                        if(check(i, j, p))
+                            ++n;
+                        
                         if(i*collumn + j == rows*collumn-1) // finish location
-                            run=0;
-                        if(!check(i, j, p))
-                            run=0;
-                        else
-                            ++p;
+                            run=0;    
+                        
                     }
                     
                 }
+            if(n)
+                ++p;
+            else
+                run=0;
         }
     }
 };
