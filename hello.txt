@@ -16,9 +16,7 @@ struct Brick{
 
 struct Field{
     Field(int r, int c)
-    : rows(r), collumn(c) { 
-        store(r*c); 
-    }
+    : rows(r), collumn(c), store(r*c) {}
     
     int rows;
     int collumn;
@@ -26,17 +24,32 @@ struct Field{
     
     void generate(){
         for(int i=0; i<rows; ++i)
-            for(int j=i; j<collumn; ++j){
-                store[i*rows + collumn].b=rand()%1;    
+            for(int j=0; j<collumn; ++j){
+                store[i*rows + collumn].n=rand()%10;    
             }
             
     }
 };
 
+std::ostream& operator<<(std::ostream& os, const Field& f)
+{
+    for(int i=0; i<f.rows; ++i){
+            
+            for(int j=0; j<f.collumn; ++j){
+                os << f.store[i*f.rows + f.collumn].n;    
+            }
+            os << std::endl;
+    }
+    return os;
+}
+
+
 int main()
 {
     Field f(5, 5);
-    
+    f.generate();
+
+std::cout << f;
 
   std::string name;
   std::cout << "What is your name? ";
