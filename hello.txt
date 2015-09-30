@@ -1,7 +1,7 @@
 // Example program
 #include <iostream>
 #include <string>
-#include <cmath>
+#include <ctime>
 #include <vector>
 #include <string>
 
@@ -16,18 +16,22 @@ struct Brick{
 
 struct Field{
     Field(int r, int c)
-    : rows(r), collumn(c), store(r*c) {}
+    : rows(r), collumn(c), store(r*c) {
+        srand (time(NULL));
+        }
     
     int rows;
     int collumn;
     std::vector<Brick> store;
     
     void generate(){
-        for(int i=0; i<rows; ++i)
-            for(int j=0; j<collumn; ++j){
-                store[i*rows + collumn].n=rand()%10;    
-            }
+        for(int i=0; i<rows; ++i){
             
+            for(int j=0; j<collumn; ++j){
+                store[i*rows + j].n=rand()%10;
+                
+            }
+        }
     }
 };
 
@@ -36,7 +40,7 @@ std::ostream& operator<<(std::ostream& os, const Field& f)
     for(int i=0; i<f.rows; ++i){
             
             for(int j=0; j<f.collumn; ++j){
-                os << f.store[i*f.rows + f.collumn].n;    
+                os << f.store[i*f.rows + j].n;    
             }
             os << std::endl;
     }
@@ -46,7 +50,7 @@ std::ostream& operator<<(std::ostream& os, const Field& f)
 
 int main()
 {
-    Field f(5, 5);
+    Field f(10, 50);
     f.generate();
 
 std::cout << f;
