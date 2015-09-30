@@ -1,3 +1,45 @@
+// Example program
 #include <iostream>
+#include <string>
+#include <cmath>
+#include <vector>
+#include <string>
 
-Hello World
+struct Brick{
+    Brick()
+    : n(0), b(0) {}
+    int n;
+    bool b;
+};
+
+
+
+struct Field{
+    Field(int r, int c)
+    : rows(r), collumn(c) { 
+        store(r*c); 
+    }
+    
+    int rows;
+    int collumn;
+    std::vector<Brick> store;
+    
+    void generate(){
+        for(int i=0; i<rows; ++i)
+            for(int j=i; j<collumn; ++j){
+                store[i*rows + collumn].b=rand()%1;    
+            }
+            
+    }
+};
+
+int main()
+{
+    Field f(5, 5);
+    
+
+  std::string name;
+  std::cout << "What is your name? ";
+  getline (std::cin, name);
+  std::cout << "Hello, " << name << "!\n";
+}
